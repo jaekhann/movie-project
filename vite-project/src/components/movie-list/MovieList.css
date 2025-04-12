@@ -1,0 +1,7 @@
+.movie-list {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: #fafcf5;
+    border-radius: 4px;
+    box-shadow: 15px 15px 30px rgb(0, 0, 0, 0.15);
+}
