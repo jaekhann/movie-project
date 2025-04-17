@@ -1,25 +1,19 @@
-import {Component} from 'react'
+import {useState} from 'react'
 import './SearchPanel.css'
 
-class SearchPanel extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {term: ''}
+const SearchPanel = ({props}) => {
+    const [term, setTerm] = useState("");
+
+    const updateTermHandler = (e) => {
+        const newTerm = e.target.value.toLowerCase();
+        setTerm(newTerm);
+        props.updateTermHandler(term);
     }
 
-    updateTermHandler = (e) => {
-        const term = e.target.value.toLowerCase();
-        this.setState({term: term});
-        this.props.updateTermHandler(term);
-    }
-
-    render() {
-        return (
-            <input type="text" className='form-control search-input w-100' onChange={this.updateTermHandler}
-                   placeholder='Kinolarni Qidirish...'/>
-        )
-    }
-
+    return (
+        <input type="text" className='form-control search-input w-100' onChange={updateTermHandler}
+               placeholder='Kinolarni Qidirish...'/>
+    )
 }
 
 export default SearchPanel

@@ -1,60 +1,50 @@
-import { Component } from "react";
+import {useState} from "react";
 import "./MoviesAddForm.css";
 
-class MoviesAddForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      viewers: "",
-    };
-  }
+const MoviesAddForm = ({addForm}) => {
+    const [state, setState] = useState({title: "", viewers: 0});
 
-  onValueChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
+    const changeHandlerInput = (e) => {
+        setState({...state, [e.target.name]: e.target.value});
+    }
 
-  addFormHandler = (e) => {
-    e.preventDefault();
-    this.props.addForm({
-      title: this.state.title,
-      viewers: this.state.viewers,
-    });
-    this.setState({ title: "", viewers: "" });
-  };
+    const addFormHandler = (e) => {
+        if (state.title.trim() === "" && state.viewers === 0) {
+            alert("Qanday Kino?")
+        } else {
+            e.preventDefault();
+            const newData = {title: state.title, viewers: state.viewers};
+            addForm(newData)
+            setState({title: "", viewers: 0})
+        }
+    }
 
-  render() {
-    const { title, viewers } = this.state;
-    
     return (
-      <div className="movies-add-form">
-        <h3>Yangi Kino Qo'shish</h3>
-        <form className="add-form d-flex" onSubmit={this.addFormHandler}>
-          <input
-            type="text"
-            className="form-control new-post-label"
-            onChange={this.onValueChange}
-            value={title}
-            placeholder="Qanday Kino?"
-            name="title"
-          />
-          <input
-            type="number"
-            className="form-control new-post-label"
-            onChange={this.onValueChange}
-            value={viewers}
-            placeholder="Nechi Marotaba Ko'rilgan?"
-            name="viewers"
-          />
-          <button type="submit" className="btn btn-outline-dark">
-            Qo'shish
-          </button>
-        </form>
-      </div>
+        <div className="movies-add-form">
+            <h3>Yangi Kino Qo'shish</h3>
+            <form className="add-form d-flex" onSubmit={addFormHandler}>
+                <input
+                    type="text"
+                    className="form-control new-post-label"
+                    onChange={changeHandlerInput}
+                    value={state.title}
+                    placeholder="Qanday Kino?"
+                    name="title"
+                />
+                <input
+                    type="number"
+                    className="form-control new-post-label"
+                    onChange={changeHandlerInput}
+                    value={state.viewers}
+                    placeholder="Nechi Marotaba Ko'rilgan?"
+                    name="viewers"
+                />
+                <button type="submit" className="btn btn-outline-dark">
+                    Qo'shish
+                </button>
+            </form>
+        </div>
     );
-  }
 }
 
 export default MoviesAddForm;
